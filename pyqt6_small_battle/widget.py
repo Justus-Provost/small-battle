@@ -18,6 +18,7 @@ class Window(QWidget):
         # player 1's buttons
         attack_p1 = QPushButton("P1: ATTACK!",self)
         attack_p1.move(125,200)
+        attack_p1.clicked.connect(self.p1_attacked)
         defend_p1 = QPushButton("P1: Defend",self)
         defend_p1.move(125,250)
         heal_p1 = QPushButton("P1: Heal",self)
@@ -37,6 +38,8 @@ class Window(QWidget):
         normal.move(195,400)
         custom = QPushButton("Custom",self)
         custom.move(395,400)
+        #if heal_p1 == True:
+        #    print("player 1 healed")
 
  
     def GUI(self):
@@ -52,6 +55,8 @@ class Window(QWidget):
         layout.addWidget(button)
         if button:
             print("atk")"""
+    def p1_attacked(self):
+        print("player 1 attacked")
  
 def main():
     app = QApplication(sys.argv)
