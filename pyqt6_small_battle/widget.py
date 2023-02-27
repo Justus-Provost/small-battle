@@ -12,7 +12,9 @@ class Window(QWidget):
         self.setWindowTitle("IDK")
         self.setWindowIcon(QIcon(self.resources+"icon.png"))
         self.GUI()
+        
         self.p1_move = "null"
+        self.p2_move = "null"
 
         #button = QPushButton("Hello World!",self)
         #button.move(295,345)
@@ -65,25 +67,72 @@ class Window(QWidget):
         layout.addWidget(button)
         if button:
             print("atk")"""
+    def calculate(self,player_1,player_2):
+        if self.p1_move == 'atk' and self.p2_move == 'atk':
+            player_1['HP'] = int(player_1['HP']) - int(player_2['ATK'])
+            player_2['HP'] = int(player_2['HP']) - int(player_1['ATK'])
+        if self.p1_move == 'atk' and self.p2_move == 'def':
+            player_1['HP'] = int(player_1['HP']) - int(player_2['ATK'])
+            #pass
+        if self.p1_move == 'atk' and self.p2_move == 'heal':
+            player_2['HP'] = int(player_2['HP']) - int(player_1['ATK'])
+        if self.p1_move == 'def' and self.p2_move == 'atk':
+            player_2['HP'] = int(player_2['HP']) - int(player_1['ATK'])
+            #pass
+        if self.p1_move == 'def' and self.p2_move == 'def':
+            pass
+        if self.p1_move == 'def' and self.p2_move == 'heal':
+            player_2['HP'] = player_2['HP'] + player_2['HEAL']
+        if self.p1_move == 'heal' and self.p2_move == 'atk':
+            player_1['HP'] = player_1['HP'] - player_2['ATK']
+        if self.p1_move == 'heal' and self.p2_move == 'def':
+            player_1['HP'] = player_1['HP'] + player_1['HEAL']
+        if self.p1_move == 'heal' and self.p2_move == 'heal':
+            player_2['HP'] = player_2['HP'] + player_2['HEAL']
+            player_1['HP'] = player_1['HP'] + player_1['HEAL']
+        # check HP
+        if player_1['HP'] > player_1['MAXHP']:
+            player_1['HP'] = player_1['MAXHP']
+        if player_2['HP'] > player_2['MAXHP']:
+            player_2['HP'] = player_2['MAXHP']
+        # End game messages and checks
+        if (int(player_1['HP']) > 0) and (int(player_2['HP']) <= 0):
+            game = "Player 1 wins!"
+        if (int(player_1['HP']) <= 0) and (int(player_2['HP']) <= 0):
+            game = "It's a tie!"
+        if (int(player_1['HP']) <= 0) and (int(player_2['HP']) > 0):
+            game = "Player 2 wins!"
     def p1_attacked(self):
-        self.p1_move = "attacked"
+        self.p1_move = "atk"
         print("player 1 attacked")
     def p1_defended(self):
+        self.p1_move = "def"
         print("player 1 defended")
     def p1_healed(self):
+        self.p1_move = "heal"
         print("player 1 healed")
     def p2_attacked(self):
+        self.p2_move = "atk"
         print("player 2 attacked")
     def p2_defended(self):
+        self.p2_move = "def"
         print("player 2 defended")
     def p2_healed(self):
+        self.p2_move = "heal"
         print("player 2 healed")
     def push_update(self):
-        print(str(self.p1_move))
+        print("player 1" + str(self.p1_move))
+        print("player 2" + str(self.p2_move))
+        self.calculate(self.player_1, self.player_2)
+        print("player 1 " + str(self.player_1))
+        print("player 2 " + str(self.player_2))
     def push_normal(self):
         print("You chose normal.")
+        self.player_1 = {'MAXHP': 3,'HP': 3,'ATK': 1,'HEAL': 1}
+        self.player_2 = {'MAXHP': 3,'HP': 3,'ATK': 1,'HEAL': 1}
     def push_custom(self):
         print("You chose custom.")
+    
  
 def main():
     app = QApplication(sys.argv)
