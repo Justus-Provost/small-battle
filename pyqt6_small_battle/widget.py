@@ -2,7 +2,7 @@ from PyQt6.QtWidgets import QApplication, QVBoxLayout, QWidget, QLabel, QPushBut
 from PyQt6.QtGui import QIcon
 from PyQt6.QtCore import Qt
 import sys
- 
+# Need to organize screen properly. After that make game end and clean up code and write rules.
 class Window(QWidget):
     
     def __init__(self):
@@ -12,9 +12,10 @@ class Window(QWidget):
         self.setWindowTitle("IDK")
         self.setWindowIcon(QIcon(self.resources+"icon.png"))
         self.GUI()
-        
+        self.text = "stats"
         self.p1_move = "null"
         self.p2_move = "null"
+        self.push_normal()
 
         #button = QPushButton("Hello World!",self)
         #button.move(295,345)
@@ -52,6 +53,13 @@ class Window(QWidget):
         custom.clicked.connect(self.push_custom)
         #if heal_p1 == True:
         #    print("player 1 healed")
+        #display = QLineEdit("Stats", self)
+        #display.move(295,100)
+        #display.setText(self.text)
+        display = QLabel(self.text, self)
+        display.move(295,100)
+        #display.setText(self.text)
+        
 
  
     def GUI(self):
@@ -59,9 +67,18 @@ class Window(QWidget):
         layout = QVBoxLayout()
         self.setLayout(layout)
  
-        label = QLabel("Weird boi")
-        label.setAlignment(Qt.AlignmentFlag.AlignCenter)
-        layout.addWidget(label)
+        self.label = QLabel("Rules")
+        self.label.setAlignment(Qt.AlignmentFlag.AlignCenter)
+        layout.addWidget(self.label)
+        self.player_1_stats = QLabel("Player 1 stats")
+        #self.player_1_stats.move(125,100)
+        self.player_1_stats.setAlignment(Qt.AlignmentFlag.AlignRight)
+        layout.addWidget(self.player_1_stats)
+        self.player_2_stats = QLabel("Player 2 stats")
+        #self.player_2_stats.move(475,100)
+        self.player_2_stats.setAlignment(Qt.AlignmentFlag.AlignLeft)
+        #self.player_2_stats.move(100,475)
+        layout.addWidget(self.player_2_stats)
         """self.button = QPushButton("Attack", )
         self.button.setAlignment(Qt.AlignmentFlag.AlignCenter)
         layout.addWidget(button)
@@ -97,6 +114,7 @@ class Window(QWidget):
             player_2['HP'] = player_2['MAXHP']
         # End game messages and checks
         if (int(player_1['HP']) > 0) and (int(player_2['HP']) <= 0):
+            main()
             game = "Player 1 wins!"
         if (int(player_1['HP']) <= 0) and (int(player_2['HP']) <= 0):
             game = "It's a tie!"
@@ -123,9 +141,17 @@ class Window(QWidget):
     def push_update(self):
         print("player 1" + str(self.p1_move))
         print("player 2" + str(self.p2_move))
+        #self.display.DisplayText("hello")
+        
         self.calculate(self.player_1, self.player_2)
         print("player 1 " + str(self.player_1))
         print("player 2 " + str(self.player_2))
+        self.label.setText(str("player 1 " + str(self.player_1) + "player 2 " + str(self.player_2)))
+        self.player_1_stats.setText(str("Player 1: HP: "+str(self.player_1['HP'])))#+", ATK: "+str(self.player_1['ATK'])))
+        self.player_2_stats.setText(str("Player 2: HP: "+str(self.player_2['HP'])))#+", ATK: "+str(self.player_2['ATK'])))
+        #self.display.setText(self.text)
+        self.p1_move = "null"
+        self.p2_move = "null"
     def push_normal(self):
         print("You chose normal.")
         self.player_1 = {'MAXHP': 3,'HP': 3,'ATK': 1,'HEAL': 1}
