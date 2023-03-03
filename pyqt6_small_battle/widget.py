@@ -45,7 +45,7 @@ class Window(QWidget):
         update.move(295,400)
         update.clicked.connect(self.push_update)
         # the mode selection buttons
-        normal = QPushButton("Normal",self)
+        normal = QPushButton("Re/Start",self)
         normal.move(195,400)
         normal.clicked.connect(self.push_normal)
         custom = QPushButton("Custom",self)
@@ -56,8 +56,8 @@ class Window(QWidget):
         #display = QLineEdit("Stats", self)
         #display.move(295,100)
         #display.setText(self.text)
-        display = QLabel(self.text, self)
-        display.move(295,100)
+        #display = QLabel(self.text, self)
+        #display.move(295,100)
         #display.setText(self.text)
         
 
@@ -67,16 +67,18 @@ class Window(QWidget):
         layout = QVBoxLayout()
         self.setLayout(layout)
  
-        self.label = QLabel("Rules")
-        self.label.setAlignment(Qt.AlignmentFlag.AlignCenter)
-        layout.addWidget(self.label)
+        self.notes = QLabel("Notes: The custom mode is currently not available. This game is meant for 2 players. To start the game press (UPDATE). Rules: This game is meant for 2 players. To start the game press (UPDATE). One player will look away from the screen while the other chooses a move for which player they are. Then the 2 players will switch positions and the other player will choose while the 1st is looking away. After both players have chosen their move they need to click (UPDATE). This will calculate the moves and stats of the players. This is the gameplay loop and the goal of this game is to predict your players move like rock paper scissors. Each player has 3 moves Atack!, Defend and Heal. Attacking will damage the opponent unless they defend. Defending will reflect the damage done to you onto the other player. Healing will heal you unless the other player attacks. The game ends once a players HP falls below 1.")
+        self.notes.setAlignment(Qt.AlignmentFlag.AlignCenter)
+        layout.addWidget(self.notes)
+        self.notes.setWordWrap(True)
+        
         self.player_1_stats = QLabel("Player 1 stats")
         #self.player_1_stats.move(125,100)
-        self.player_1_stats.setAlignment(Qt.AlignmentFlag.AlignRight)
+        self.player_1_stats.setAlignment(Qt.AlignmentFlag.AlignCenter)
         layout.addWidget(self.player_1_stats)
         self.player_2_stats = QLabel("Player 2 stats")
         #self.player_2_stats.move(475,100)
-        self.player_2_stats.setAlignment(Qt.AlignmentFlag.AlignLeft)
+        self.player_2_stats.setAlignment(Qt.AlignmentFlag.AlignHCenter)
         #self.player_2_stats.move(100,475)
         layout.addWidget(self.player_2_stats)
         """self.button = QPushButton("Attack", )
@@ -146,16 +148,18 @@ class Window(QWidget):
         self.calculate(self.player_1, self.player_2)
         print("player 1 " + str(self.player_1))
         print("player 2 " + str(self.player_2))
-        self.label.setText(str("player 1 " + str(self.player_1) + "player 2 " + str(self.player_2)))
+        #self.label.setText(str("player 1 " + str(self.player_1) + "player 2 " + str(self.player_2)))
         self.player_1_stats.setText(str("Player 1: HP: "+str(self.player_1['HP'])))#+", ATK: "+str(self.player_1['ATK'])))
         self.player_2_stats.setText(str("Player 2: HP: "+str(self.player_2['HP'])))#+", ATK: "+str(self.player_2['ATK'])))
         #self.display.setText(self.text)
+        self.notes.setText("Notes: The custom mode is currently not available. For rules again press (Re/Start). Remember: This works on the honor system don't change the other players move. Be nice:)")
         self.p1_move = "null"
         self.p2_move = "null"
     def push_normal(self):
         print("You chose normal.")
         self.player_1 = {'MAXHP': 3,'HP': 3,'ATK': 1,'HEAL': 1}
         self.player_2 = {'MAXHP': 3,'HP': 3,'ATK': 1,'HEAL': 1}
+        self.notes.setText("Notes: The custom mode is currently not available. This game is meant for 2 players. To start the game and get rid of the rules press (UPDATE). Rules:-> One player will look away from the screen while the other chooses a move for which player they are. Then the 2 players will switch positions and the other player will choose while the 1st is looking away. After both players have chosen their move they need to click (UPDATE). This will calculate the moves and stats of the players. This is the gameplay loop and the goal of this game is to predict your players move like rock paper scissors. Each player has 3 moves Atack!, Defend and Heal. Attacking will damage the opponent unless they defend. Defending will reflect the damage done to you onto the other player. Healing will heal you unless the other player attacks. The game ends once a players HP falls below 1.")
     def push_custom(self):
         print("You chose custom.")
     
