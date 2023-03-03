@@ -114,14 +114,6 @@ class Window(QWidget):
             player_1['HP'] = player_1['MAXHP']
         if player_2['HP'] > player_2['MAXHP']:
             player_2['HP'] = player_2['MAXHP']
-        # End game messages and checks
-        if (int(player_1['HP']) > 0) and (int(player_2['HP']) <= 0):
-            main()
-            game = "Player 1 wins!"
-        if (int(player_1['HP']) <= 0) and (int(player_2['HP']) <= 0):
-            game = "It's a tie!"
-        if (int(player_1['HP']) <= 0) and (int(player_2['HP']) > 0):
-            game = "Player 2 wins!"
     def p1_attacked(self):
         self.p1_move = "atk"
         print("player 1 attacked")
@@ -152,9 +144,16 @@ class Window(QWidget):
         self.player_1_stats.setText(str("Player 1: HP: "+str(self.player_1['HP'])))#+", ATK: "+str(self.player_1['ATK'])))
         self.player_2_stats.setText(str("Player 2: HP: "+str(self.player_2['HP'])))#+", ATK: "+str(self.player_2['ATK'])))
         #self.display.setText(self.text)
-        self.notes.setText("Notes: The custom mode is currently not available. For rules again press (Re/Start). Remember: This works on the honor system don't change the other players move. Be nice:)")
+        self.notes.setText("Notes: The custom mode is currently not available. I will be adding (Random) buttons and custom stats later. Currently the button (Custom) does nothing. For rules again press (Re/Start). Remember: This works on the honor system don't change the other players move. Be nice:)")
         self.p1_move = "null"
         self.p2_move = "null"
+        # End game messages and checks
+        if (int(self.player_1['HP']) > 0) and (int(self.player_2['HP']) <= 0):
+            self.notes.setText("Player 1 wins!.")
+        if (int(self.player_1['HP']) <= 0) and (int(self.player_2['HP']) <= 0):
+            self.notes.setText("It's a tie!")
+        if (int(self.player_1['HP']) <= 0) and (int(self.player_2['HP']) > 0):
+            self.notes.setText("Player 2 wins!")
     def push_normal(self):
         print("You chose normal.")
         self.player_1 = {'MAXHP': 3,'HP': 3,'ATK': 1,'HEAL': 1}
