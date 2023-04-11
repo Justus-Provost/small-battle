@@ -161,18 +161,33 @@ class Window(QWidget):
         self.notes.setText("Notes: The custom mode is currently not available. This game is meant for 2 players. To start the game and get rid of the rules press (UPDATE). Rules:-> One player will look away from the screen while the other chooses a move for which player they are. Then the 2 players will switch positions and the other player will choose while the 1st is looking away. After both players have chosen their move they need to click (UPDATE). This will calculate the moves and stats of the players. This is the gameplay loop and the goal of this game is to predict your players move like rock paper scissors. Each player has 3 moves Atack!, Defend and Heal. Attacking will damage the opponent unless they defend. Defending will reflect the damage done to you onto the other player. Healing will heal you unless the other player attacks. The game ends once a players HP falls below 1.")
     def push_custom(self):
         print("You chose custom.")
-        self.player_1 = {'MAXHP': get_custom('Player 1 MAXHP'),'ATK': get_custom('Player 1 ATK'),'HEAL': get_custom('Player 1 HEAL')}
+        self.player_1['MAXHP'] = get_custom('Player 1 MAXHP')
+        self.player_1['ATK'] = get_custom('Player 1 ATK')
+        self.player_1['HEAL'] = get_custom('Player 1 HEAL')
+        self.player_2['MAXHP'] = get_custom('Player 2 MAXHP')
+        self.player_2['ATK'] = get_custom('Player 2 ATK')
+        self.player_2['HEAL'] = get_custom('Player 2 HEAL')
+        self.player_1['HP'] = self.player_1['MAXHP']
+        self.player_2['HP'] = self.player_2['MAXHP']
+        """self.player_1 = {'MAXHP': get_custom('Player 1 MAXHP'),'ATK': get_custom('Player 1 ATK'),'HEAL': get_custom('Player 1 HEAL')}
         self.player_2 = {'MAXHP': get_custom('Player 2 MAXHP'),'ATK': get_custom('Player 2 ATK'),'HEAL': get_custom('Player 2 HEAL')}
+        self.player_1['HP'] = self.player_1['MAXHP']
+        self.player_2['HP'] = self.player_2['MAXHP']"""
+        self.print_stats()
+    def print_stats(self):
+        print(self.player_1)
+        print(self.player_2)
 def get_custom(result):
     #num = ""
     #while(type(num) != int):
     while(True):
         try:
             num = int(input(str(result)+": "))
-        except(TypeError):
-            pass
+        except(ValueError):
+            num = " "
         if(type(num) == int):
             return num
+
     
  
 def main():
